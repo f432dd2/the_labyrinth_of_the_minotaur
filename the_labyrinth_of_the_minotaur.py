@@ -24,6 +24,129 @@ def printLVL():
 def printXP():
     print("У тебя", XP, "опыта.")
 
+def Minotaur():
+    global Hp
+    global Coins
+    global XP
+    global LVL
+
+    residentofdarknessLvl = r.randint(35, 50)
+    residentofdarknessHp = residentofdarknessLvl * 1.5
+    residentofdarknessDamage = residentofdarknessLvl * 2 - 1
+
+    print("Ты набрел на Минотавра, у него {0} уровень, {1} жизней и {2} урона.".format(residentofdarknessLvl, residentofdarknessHp, residentofdarknessDamage))
+    printParameters()
+
+    while residentofdarknessHp > 0:
+        Сhoice = input("Что будешь делать (атака): ").lower()
+
+        if Сhoice == "атака":
+            residentofdarknessHp -= Damage
+            if residentofdarknessHp <= 0:
+                print("Ты победил Минотавра. У него осталось", 0, "жизней.")
+            else:
+                print("Ты атаковал Минотавра и у него осталось", residentofdarknessHp, "жизней.")
+        else:
+            continue
+
+        if residentofdarknessHp > 0:
+            Hp -= residentofdarknessDamage
+            print("Минотавр атаковал и у тебя осталось", Hp, "жизней.")
+
+        if Hp <= 0:
+            break
+
+    else:
+        loot = r.randint(0, 5) + residentofdarknessLvl
+        Coins += loot
+        Xp = r.randint(0, 5) + residentofdarknessLvl
+        XP += Xp
+        LVL += 1
+        print("Тебе удалось одолеть Минотавра, за что ты получил", loot, "монет", XP, "опыта и повысил свой уровень на 1.")
+        printParameters()
+
+def residentofdarkness():
+    global Hp
+    global Coins
+    global XP
+    global LVL
+
+    residentofdarknessLvl = r.randint(15, 25)
+    residentofdarknessHp = residentofdarknessLvl * 1.5
+    residentofdarknessDamage = residentofdarknessLvl * 2 - 1
+
+    print("Ты набрел на Жителя Тьмы, у него {0} уровень, {1} жизней и {2} урона.".format(residentofdarknessLvl, residentofdarknessHp, residentofdarknessDamage))
+    printParameters()
+
+    while residentofdarknessHp > 0:
+        Сhoice = input("Что будешь делать (атака): ").lower()
+
+        if Сhoice == "атака":
+            residentofdarknessHp -= Damage
+            if residentofdarknessHp <= 0:
+                print("Ты победил Жителя Тьмы. У него осталось", 0, "жизней.")
+            else:
+                print("Ты атаковал Жителя тьмы и у него осталось", residentofdarknessHp, "жизней.")
+        else:
+            continue
+
+        if residentofdarknessHp > 0:
+            Hp -= residentofdarknessDamage
+            print("Житель Тьмы атаковал и у тебя осталось", Hp, "жизней.")
+
+        if Hp <= 0:
+            break
+
+    else:
+        loot = r.randint(0, 5) + residentofdarknessLvl
+        Coins += loot
+        Xp = r.randint(0, 5) + residentofdarknessLvl
+        XP += Xp
+        LVL += 1
+        print("Тебе удалось одолеть Жителя Тьмы, за что ты получил", loot, "монет", XP, "опыта и повысил свой уровень на 1.")
+        printParameters()
+
+def guardianofdustywalls():
+    global Hp
+    global Coins
+    global XP
+    global LVL
+
+    guardianofdustywallsLvl = r.randint(25, 35)
+    guardianofdustywallsHp = guardianofdustywallsLvl * 1.5
+    guardianofdustywallsDamage = guardianofdustywallsLvl * 2 - 1
+
+    print("Ты набрел на Хранителя пыльных стен, у него {0} уровень, {1} жизней и {2} урона.".format(guardianofdustywallsLvl, guardianofdustywallsHp, guardianofdustywallsDamage))
+    printParameters()
+
+    while guardianofdustywallsHp > 0:
+        Сhoice = input("Что будешь делать (атака): ").lower()
+
+        if Сhoice == "атака":
+            guardianofdustywallsHp -= Damage
+            if guardianofdustywallsHp <= 0:
+                print("Ты победил Хранителя пыльных стен. У него осталось", 0, "жизней.")
+            else:
+                print("Ты атаковал Хранителя пыльных стен и у него осталось", guardianofdustywallsHp, "жизней.")
+        else:
+            continue
+
+        if guardianofdustywallsHp > 0:
+            Hp -= guardianofdustywallsDamage
+            print("Хранитель пыльных стен атаковал и у тебя осталось", Hp, "жизней.")
+
+        if Hp <= 0:
+            break
+
+    else:
+        loot = r.randint(0, 5) + guardianofdustywallsLvl
+        Coins += loot
+        Xp = r.randint(0, 5) + guardianofdustywallsLvl
+        XP += Xp
+        LVL += 1
+        print("Тебе удалось одолеть Хранителя пыльных стен, за что ты получил", loot, "монет", XP, "опыта и повысил свой уровень на 1.")
+        printParameters()
+
 def scroll():
     global Hp
     global Damage
@@ -129,12 +252,12 @@ def meetMonster():
 
     monsterLvl = r.randint(1, 6)
     monsterHp = monsterLvl
-    monsterDmg = monsterLvl * 2 - 1
+    monsterDamage = monsterLvl * 2 - 1
     monsters = ["Grock", "Clop", "Cholop", "Madrock", "Lilbitch"]
 
     monster = r.choice(monsters)
 
-    print("Ты набрел на монстра - {0}, у него {1} уровень, {2} жизней и {3} урона.".format(monster, monsterLvl, monsterHp, monsterDmg))
+    print("Ты набрел на монстра - {0}, у него {1} уровень, {2} жизней и {3} урона.".format(monster, monsterLvl, monsterHp, monsterDamage))
     printParameters()
 
     while monsterHp > 0:
@@ -157,7 +280,7 @@ def meetMonster():
             continue
 
         if monsterHp > 0:
-            Hp -= monsterDmg
+            Hp -= monsterDamage
             print("Монстр атаковал и у тебя осталось", Hp, "жизней.")
 
         if Hp <= 0:
@@ -166,7 +289,8 @@ def meetMonster():
     else:
         loot = r.randint(0, 2) + monsterLvl
         Coins += loot
-        XP = r.randint(0, 3) + monsterLvl
+        Xp = r.randint(0, 2) + monsterLvl
+        XP += Xp
         print("Тебе удалось одолеть монстра, за что ты получил", loot, "монет и", XP, "опыта.")
         printCoins()
         printXP()
@@ -188,7 +312,7 @@ def initGame(initHp, initCoins, initDamage, initLVL, initXP):
     printParameters()
 
 def gameLoop():
-    situation = r.randint(0, 4)
+    situation = r.randint(0, 6)
 
     if situation == 0:
         Taverna()
@@ -196,6 +320,12 @@ def gameLoop():
         meetMonster()
     elif situation == 3:
         scroll()
+    elif LVL == 10:
+        residentofdarkness()
+    elif LVL == 20:
+        guardianofdustywalls()
+    elif LVL == 30:
+        Minotaur()
     else:
         input("Бродим во тьме...")
 
