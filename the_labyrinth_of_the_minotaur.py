@@ -24,46 +24,81 @@ def printLVL():
 def printXP():
     print("У тебя", XP, "опыта.")
 
+# Рейдеры #
+
+def raiders():
+    global Hp
+    global Coins
+    global XP
+    global LVL
+    print("На пути тебе встретилась группа рейдеров. Против толпы не попрешь... Они требуют все твое золото, либо душу.")
+    Choice = input("Отдать золото (отдать / бег): ").lower()
+    if Choice == "отдать":
+        print("Скромная плата за жизнь.")
+        Coins = 0
+    elif Choice == "отдать" and Coins == 0:
+        print("Обманывать не хорошо...")
+        Hp = 0
+    elif Choice == "бег" or " ":
+        chance = r.randint(-5, 1)
+        if chance >= -3:
+            Hp -= 1
+            print("Тебе удалось потеряться среди стен лабиринта! Но камень вдогонку пришелся прямо в затылок.")
+        else:
+            Coins = 0
+            Hp -= 1
+            print("Похоже они знают эти стены лучше тебя.")
+            if Hp <= 0:
+                print("Против толпы не попрешь... Ты так и не успел найти товарищей.")
+    printParameters()
+
+# Босс #
+
 def Minotaur():
     global Hp
     global Coins
     global XP
     global LVL
 
-    residentofdarknessLvl = r.randint(35, 50)
-    residentofdarknessHp = residentofdarknessLvl * 1.5
-    residentofdarknessDamage = residentofdarknessLvl * 2 - 1
+    MinotaurLvl = r.randint(30, 40)
+    MinotaurHp = MinotaurLvl * 1.5
+    MinotaurDamage = MinotaurLvl * 2 - 1
 
-    print("Ты набрел на Минотавра, у него {0} уровень, {1} жизней и {2} урона.".format(residentofdarknessLvl, residentofdarknessHp, residentofdarknessDamage))
+    print("Ты набрел на Минотавра, у него {0} уровень, {1} жизней и {2} урона.".format(MinotaurLvl, MinotaurHp, MinotaurDamage))
     printParameters()
 
-    while residentofdarknessHp > 0:
+    while MinotaurHp > 0:
         Сhoice = input("Что будешь делать (атака): ").lower()
 
         if Сhoice == "атака":
-            residentofdarknessHp -= Damage
-            if residentofdarknessHp <= 0:
+            MinotaurHp -= Damage
+            if MinotaurHp <= 0:
                 print("Ты победил Минотавра. У него осталось", 0, "жизней.")
             else:
-                print("Ты атаковал Минотавра и у него осталось", residentofdarknessHp, "жизней.")
+                print("Ты атаковал Минотавра и у него осталось", MinotaurHp, "жизней.")
         else:
             continue
 
-        if residentofdarknessHp > 0:
-            Hp -= residentofdarknessDamage
-            print("Минотавр атаковал и у тебя осталось", Hp, "жизней.")
+        if MinotaurHp > 0:
+            Hp -= MinotaurDamage
+            if Hp > 0:
+                print("Минотавр атаковал и у тебя осталось", Hp, "жизней.")
+            else:
+                print("Минотавр атаковал и у тебя осталось", 0, "жизней.")
 
         if Hp <= 0:
             break
 
     else:
-        loot = r.randint(0, 5) + residentofdarknessLvl
+        loot = r.randint(0, 5) + MinotaurLvl
         Coins += loot
-        Xp = r.randint(0, 5) + residentofdarknessLvl
+        Xp = r.randint(0, 5) + MinotaurLvl
         XP += Xp
         LVL += 1
         print("Тебе удалось одолеть Минотавра, за что ты получил", loot, "монет", XP, "опыта и повысил свой уровень на 1.")
         printParameters()
+
+# Босс #
 
 def residentofdarkness():
     global Hp
@@ -71,7 +106,7 @@ def residentofdarkness():
     global XP
     global LVL
 
-    residentofdarknessLvl = r.randint(15, 25)
+    residentofdarknessLvl = r.randint(10, 20)
     residentofdarknessHp = residentofdarknessLvl * 1.5
     residentofdarknessDamage = residentofdarknessLvl * 2 - 1
 
@@ -92,7 +127,10 @@ def residentofdarkness():
 
         if residentofdarknessHp > 0:
             Hp -= residentofdarknessDamage
-            print("Житель Тьмы атаковал и у тебя осталось", Hp, "жизней.")
+            if Hp > 0:
+                print("Житель Тьмы атаковал и у тебя осталось", Hp, "жизней.")
+            else:
+                print("Житель Тьмы атаковал и у тебя осталось", 0, "жизней.")
 
         if Hp <= 0:
             break
@@ -106,13 +144,15 @@ def residentofdarkness():
         print("Тебе удалось одолеть Жителя Тьмы, за что ты получил", loot, "монет", XP, "опыта и повысил свой уровень на 1.")
         printParameters()
 
+# Босс #
+
 def guardianofdustywalls():
     global Hp
     global Coins
     global XP
     global LVL
 
-    guardianofdustywallsLvl = r.randint(25, 35)
+    guardianofdustywallsLvl = r.randint(20, 30)
     guardianofdustywallsHp = guardianofdustywallsLvl * 1.5
     guardianofdustywallsDamage = guardianofdustywallsLvl * 2 - 1
 
@@ -133,7 +173,10 @@ def guardianofdustywalls():
 
         if guardianofdustywallsHp > 0:
             Hp -= guardianofdustywallsDamage
-            print("Хранитель пыльных стен атаковал и у тебя осталось", Hp, "жизней.")
+            if Hp > 0:
+                print("Хранитель пыльных стен атаковал и у тебя осталось", Hp, "жизней.")
+            else:
+                print("Хранитель пыльных стен атаковал и у тебя осталось", 0, "жизней.")
 
         if Hp <= 0:
             break
@@ -147,41 +190,9 @@ def guardianofdustywalls():
         print("Тебе удалось одолеть Хранителя пыльных стен, за что ты получил", loot, "монет", XP, "опыта и повысил свой уровень на 1.")
         printParameters()
 
-def scroll():
-    global Hp
-    global Damage
-    global Coins
-    global LVL
-    global XP
+# Таверна #
 
-    def buy(XPPrice):
-        global XP
-        if XP >= XPPrice:
-            XP -= XPPrice
-            printXP()
-            return True
-        print("У тебя маловато опыта!")
-        return False
-
-    XPPrice = 10
-
-    print("Ты нашел подозрительно светящийся свиток.")
-    printParameters()
-
-    while input("Подобрать свиток?: ").lower() == "подобрать":
-        print("1) Повысить уровень -", XPPrice, "опыта;")
-
-        Choice = input("Что хочешь прочесть?: ")
-        if Choice == "1":
-            if buy(XPPrice):
-                LVL += 1
-                Hp += r.randint(2, 5)
-                Damage += r.randint(2, 5)
-                printParameters()
-        else:
-            print("Не получается прочитать свиток!")
-
-def Taverna():
+def Tavern():
     global Hp
     global Damage
     global Coins
@@ -192,68 +203,73 @@ def Taverna():
         global Coins
         if Coins >= Price:
             Coins -= Price
-            printCoins()
             return True
         print("У тебя маловато монет!")
         return False
 
-    weaponLvl = r.randint(1, 3)
-    weaponDamage = r.randint(1, 5) * weaponLvl
+    potions = ["Зелье здоровья", "Зелье силы"]
+    potionPrice = LVL * 1.5
+    PotionRarity = r.randint(1, 2)
+
+    if PotionRarity == 1:
+        potions = "Зелье здоровья"
+    else:
+        potions = "Зелье силы"
+
+    weaponLvl = LVL + r.randint(1, 30)
+
+    if weaponLvl > LVL:
+        weaponLvl = LVL + r.randint(1, 3)
+
+
     weapons = ["Сломанный меч", "Ржавый топор", "Самодельный лук", "Булава", "Заточка", "Палка", "Кость Тролля", "Булыжник", "Копье", "Сюрикэн", "Кинжал", "Секира"]
     weaponRarities = ["Обычный", "Редкий", "Эпический", "Легендарный"]
-    weaponRarity = weaponRarities[weaponLvl - 1]
-    weaponPrice = r.randint(3, 10) * weaponLvl
-    weapon = r.choice(weapons)
+    weaponRarity = r.randint(1, 4)
+    weaponPrice = LVL * weaponLvl - LVL
+    weapon = r.choice(weaponRarities) + " " + r.choice(weapons)
 
-    OneHpPrice = 2
-    ThreeHpPrice = 5
-    OneDamagePrice = 3
-    ThreeDamagePrice = 7
-
-    print("Вдалеке ты видишь свет из окон таверны.")
-    printParameters()
+    if weaponRarity == 1:
+        weaponRarities == "Обычный"
+        weaponDamage = weaponLvl
+    elif weaponRarity == 2:
+        weaponRarities == "Редкий"
+        weaponDamage = 2 * weaponLvl
+    elif weaponRarity == 3:
+        weaponRarities == "Эпический"
+        weaponDamage = 3 * weaponLvl + LVL
+    else:
+        weaponRarities == "Легендарный"
+        weaponDamage = 4 * weaponLvl + LVL
 
     while input("Вы подошли к таверне (зайти / уйти): ").lower() == "зайти":
-        print("1) Одна единица здоровья -", OneHpPrice, "монет;")
-        print("2) Три единицы здоровья -", ThreeHpPrice, "монет;")
-        print("3) Одна единица урона -", OneDamagePrice, "монет;")
-        print("4) Три единицы урона -", ThreeDamagePrice, "монет;")
-        print("5) {0} {1} - {2} монет".format(weaponRarity, weapon, weaponPrice))
+        print("1)", weapon, "за", weaponPrice, "монет c уроном -", weaponDamage, ";")
+        print("2)", potions, "за", potionPrice, "монет;")
+        printParameters()
 
-        Choice = input("Что хочешь приобрести: ")
+        Choice = input("Что хочешь приобрести?:")
+        
         if Choice == "1":
-            if buy(OneHpPrice):
-                Hp += 1
-                printHp()
-        elif Choice == "2":
-            if buy(ThreeHpPrice):
-                Hp += 3
-                printHp()
-        elif Choice == "3":
-            if buy(OneDamagePrice):
-                Damage += 1
-                printDamage()
-        elif Choice == "4":
-            if buy(ThreeDamagePrice):
-                Damage += 1
-                printDamage()
-        elif Choice == "5":
             if buy(weaponPrice):
                 Damage = weaponDamage
-                printDamage()
-        else:
-            print("Ты мне зубы не заговаривай. Либо покупай, либо проваливай!")
+        if Choice == "2":
+            if buy(potionPrice) and potions == "Зелье здоровья":
+                Hp += 2 + (LVL/2)
+            else:
+                Damage += 2 + (LVL/2)
+        printParameters()
 
-def meetMonster():
+# Монстры #
+
+def Monsters():
     global Hp
     global Coins
     global XP
     global LVL
 
-    monsterLvl = r.randint(1, 6)
+    monsterLvl = LVL + r.randint(1, 5)
     monsterHp = monsterLvl
-    monsterDamage = monsterLvl * 2 - 1
-    monsters = ["Grock", "Clop", "Cholop", "Madrock", "Lilbitch"]
+    monsterDamage = monsterLvl * 2
+    monsters = ["Орк", "Муха", "Дряхлый скелет", "Приведение", "Кентавр"]
 
     monster = r.choice(monsters)
 
@@ -270,8 +286,8 @@ def meetMonster():
             else:
                 print("Ты атаковал монстра и у него осталось", monsterHp, "жизней.")
         elif Сhoice == "бег":
-            chance = r.randint(1, 2)
-            if chance == 1:
+            chance = r.randint(-5, 1)
+            if chance >= -3:
                 print("Тебе удалось потеряться среди стен лабиринта!")
                 break
             else:
@@ -281,7 +297,11 @@ def meetMonster():
 
         if monsterHp > 0:
             Hp -= monsterDamage
+            
+        if Hp > 0:
             print("Монстр атаковал и у тебя осталось", Hp, "жизней.")
+        else:
+            print("Монстр атаковал и у тебя осталось", 0, "жизней.")
 
         if Hp <= 0:
             break
@@ -294,6 +314,8 @@ def meetMonster():
         print("Тебе удалось одолеть монстра, за что ты получил", loot, "монет и", XP, "опыта.")
         printCoins()
         printXP()
+
+# Начало игры #
 
 def initGame(initHp, initCoins, initDamage, initLVL, initXP):
     global Hp
@@ -311,23 +333,38 @@ def initGame(initHp, initCoins, initDamage, initLVL, initXP):
     print("Ворота закрываются за тобой и теперь ты вынужден гнить в этих лабиринтах до конца своих дней.")
     printParameters()
 
+# Игровые ситуации #
+
 def gameLoop():
-    situation = r.randint(0, 6)
+    global Hp
+    global Coins
+    global Damage
+    global LVL
+    global XP
+
+    situation = r.randint(0, 5)
 
     if situation == 0:
-        Taverna()
+        Tavern()
     elif situation == 1:
-        meetMonster()
-    elif situation == 3:
-        scroll()
+        Monsters()
+    elif situation == 3.5:
+        raiders()
     elif LVL == 10:
         residentofdarkness()
-    elif LVL == 20:
-        guardianofdustywalls()
     elif LVL == 30:
+        guardianofdustywalls()
+    elif LVL == 50:
         Minotaur()
+    elif XP >= 10:
+        XP -= 10
+        LVL += 1
+        Hp += 1
+        Damage += 1
     else:
         input("Бродим во тьме...")
+
+# Здоровье Урон Золото Уровень Опыт #
 
 initGame(5, 5, 5, 1, 0)
 
@@ -335,7 +372,7 @@ while True:
     gameLoop()
 
     if Hp <= 0:
-        if input("Твои кости станут частью этих стен. Хочешь начать сначала?: ").lower() == "да":
+        if input("Твои кости станут частью этих стен. Хочешь начать сначала? (да): ").lower() == "да":
             initGame(5, 5, 5, 1, 0)
         else:
             break
